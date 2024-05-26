@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if worker_list %}
+    <ul>
+      {% for worker in worker_list %}
+        <li>
+          <a href="{% url "task_manager:worker-detail" pk=worker.id %}">{{ worker.id }}</a>
+          {{ worker.model }} ({{ worker.position.name }})
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no workers!</p>
+  {% endif %}
+{% endblock %}
