@@ -22,6 +22,15 @@ def index(request):
     return render(request, "task_manager/index.html", context=context)
 
 
+class WorkerTasksListView(LoginRequiredMixin, generic.ListView):
+    model = Worker
+    template_name = "task_manager/worker_task_list.html"
+    context_object_name = "worker_tasks"
+
+    def get_queryset(self):
+        return self.request.user.task_set.all().select_related("task_type")
+
+
 class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
     paginate_by = 5
