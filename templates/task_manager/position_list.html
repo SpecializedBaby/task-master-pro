@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if position_list %}
+    <ul>
+      {% for position in position_list %}
+        <li>
+          <a href="{% url "task_manager:position-detail" pk=position.id %}">{{ position.id }}</a>
+          <h2>{{ position.name }}</h2>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no positions!</p>
+  {% endif %}
+{% endblock %}
