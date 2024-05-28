@@ -88,6 +88,8 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
 
 class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Worker
+    queryset = Worker.objects.all().prefetch_related("task_set__task_type")
+    template_name = "task_manager/worker_detail.html"
 
 
 class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
