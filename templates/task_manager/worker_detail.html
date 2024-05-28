@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ worker.first_name }} {{ worker.last_name }}</h1>
+<p><strong>Position:</strong> {{ worker.position.name }}</p>
+
+<h2>Assigned Tasks</h2>
+{% if worker.assigned_tasks.all %}
+    <ul>
+        {% for task in worker.assigned_tasks.all %}
+            <li>{{ task.name }} ({{ task.task_type.name }})</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tasks assigned.</p>
+{% endif %}
+{% endblock %}
