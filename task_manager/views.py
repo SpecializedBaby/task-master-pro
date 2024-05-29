@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse_lazy
@@ -134,3 +135,14 @@ class PositionUpdateView(LoginRequiredMixin, generic.UpdateView):
 class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Position
     success_url = reverse_lazy("task_manager:position-list")
+
+
+def toggle_assign_to_task(request, pk):
+    worker = Worker.objects.get(id=request.user.id)
+    if (
+        Task.objects.get(id=pk) in worker.task_set.all()
+    ):
+        worker.task_set.remove(pk)
+    else:
+        worker.task_set.add(pk)
+    return HttpResponseRedirect(reverse_lazy("task_manager:task-detail", args=[pk]))
