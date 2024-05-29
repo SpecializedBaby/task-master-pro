@@ -1,20 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% if task_list %}
-    <ul>
-      {% for task in task_list %}
-        <li>
-          <a href="{% url "task_manager:task-detail" pk=task.id %}">{{ task.id }}</a>
-          <h2>{{ task.name }}</h2>
-          <h4>Description: {{ task.description }}</h4>
-          Deadline: {{ task.deadline }} (task.priority)
-          Task type: {{ task.task_type.name }}
-          Assigned by: {{ task.assignees.username }}
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>There are no Task!</p>
-  {% endif %}
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1>Task List</h1>
+      <a href="{% url 'task_manager:task-create' %}" class="btn btn-primary">
+        Create Task
+      </a>
+    </div>
+    {% if task_list %}
+      <div class="list-group mt-4">
+        {% for task in task_list %}
+          <a href="{% url 'task_manager:task-detail' pk=task.id %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ task.name }}</h5>
+              <small>Deadline: {{ task.deadline }}</small>
+            </div>
+            <p class="mb-1">Description: {{ task.description }}</p>
+            <small>Type: {{ task.task_type.name }}</small>
+            <br>
+            <small>Assigned by: {{ task.assignees.username }}</small>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-warning mt-4" role="alert">
+        There are no tasks!
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}
