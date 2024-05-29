@@ -22,6 +22,10 @@ class Worker(AbstractUser):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
 
+    class Meta:
+        verbose_name = "worker"
+        verbose_name_plural = "workers"
+
     def get_absolute_url(self):
         return reverse("task_manager:worker-detail", kwargs={"pk": self.pk})
 
