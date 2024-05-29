@@ -1,16 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% if worker_list %}
-    <ul>
-      {% for worker in worker_list %}
-        <li>
-          <a href="{% url "task_manager:worker-detail" pk=worker.id %}">{{ worker.id }}</a>
-          {{ worker.model }} ({{ worker.position.name }})
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>There are no workers!</p>
-  {% endif %}
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1>Worker List</h1>
+      <a href="{% url 'task_manager:worker-create' %}" class="btn btn-primary">
+        Create Worker
+      </a>
+    </div>
+    {% if worker_list %}
+      <div class="list-group mt-4">
+        {% for worker in worker_list %}
+          <a href="{% url 'task_manager:worker-detail' pk=worker.id %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ worker.first_name }} {{ worker.last_name }}</h5>
+              <small>Position: {{ worker.position.name }}</small>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-warning mt-4" role="alert">
+        There are no workers!
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}
