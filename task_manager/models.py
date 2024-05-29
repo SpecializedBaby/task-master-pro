@@ -18,7 +18,7 @@ class Position(models.Model):
 
 
 class Worker(AbstractUser):
-    position = models.ForeignKey(Position, on_delete=models.SET_NULL, blank=True, null=True)
+    position = models.ForeignKey(Position, on_delete=models.SET_NULL, blank=True, null=True, related_name="workers")
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
 
