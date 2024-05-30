@@ -43,6 +43,13 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = TaskForm
     success_url = reverse_lazy("task_manager:task-list")
 
+    def get_initial(self):
+        initial = super().get_initial()
+        referer = self.request.META.get("HTTP_REFERER")
+        if "my-tasks" in referer:
+            initial["assignees"] = [self.request.user]
+        return initial
+
 
 class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
