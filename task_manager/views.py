@@ -4,7 +4,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from task_manager.forms import TaskForm, WorkerCreationForm, TaskSearchForm
+from task_manager.forms import TaskForm, WorkerCreationForm, TaskSearchForm, TaskTypeSearchForm
 from task_manager.models import Worker, Task, TaskType, Position
 
 
@@ -49,6 +49,22 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
     paginate_by = 5
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TaskListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TaskSearchForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        name = self.request.GET.get("name", "")
+
+        if name:
+            return queryset.filter(name__icontains=name)
+        return queryset
+
 
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
@@ -84,6 +100,23 @@ class TaskTypeListView(LoginRequiredMixin, generic.ListView):
     template_name = "task_manager/task_type_list.html"
     context_object_name = "task_type_list"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TaskTypeListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TaskTypeSearchForm(
+            initial={
+                "name": name,
+            }
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        name = self.request.GET.get("name", "")
+        if name:
+            return queryset.filter(name__icontains=name)
+        return queryset
+
 
 class TaskTypeCreateView(LoginRequiredMixin, generic.CreateView):
     model = TaskType
@@ -108,6 +141,23 @@ class TaskTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
 class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
     paginate_by = 5
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(WorkerListView, self).get_context_data(**kwargs)
+        first_name = self.request.GET.get("firs_name", "")
+        context["search_form"] = TaskTypeSearchForm(
+            initial={
+                "firs_name": first_name,
+            }
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        first_name = self.request.GET.get("first_name", "")
+        if first_name:
+            return queryset.filter(first_name__icontains=first_name)
+        return queryset
 
 
 class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
@@ -136,6 +186,23 @@ class WorkerDeleteView(LoginRequiredMixin, generic.DeleteView):
 class PositionListView(LoginRequiredMixin, generic.ListView):
     model = Position
     paginate_by = 5
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(PositionListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TaskTypeSearchForm(
+            initial={
+                "name": name,
+            }
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        name = self.request.GET.get("name", "")
+        if name:
+            return queryset.filter(name__icontains=name)
+        return queryset
 
 
 class PositionDetailView(LoginRequiredMixin, generic.DetailView):
