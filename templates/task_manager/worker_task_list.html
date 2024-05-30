@@ -1,16 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Your Tasks</h1>
-  {% if worker_tasks %}
-    <ul>
-      {% for task in worker_tasks %}
-        <li>
-          <strong>{{ task.name }}</strong> - {{ task.task_type.name }}
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>You have no tasks assigned.</p>
-  {% endif %}
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1>Your tasks list</h1>
+      <a href="{% url 'task_manager:task-create' %}" class="btn btn-primary">
+        Create Task
+      </a>
+    </div>
+    {% if worker_tasks %}
+      <div class="list-group mt-4">
+        {% for task in worker_tasks %}
+          <a href="{% url 'task_manager:task-detail' pk=task.id %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ task.name }}</h5>
+              <small>Deadline: {{ task.deadline }}</small>
+            </div>
+            <p class="mb-1">Description: {{ task.description }}</p>
+            <small>Type: {{ task.task_type.name }}</small>
+            <br>
+            <small>Assigned by: {{ task.assignees.username }}</small>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-warning mt-4" role="alert">
+        You don't have any tasks!
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}
