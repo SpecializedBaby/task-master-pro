@@ -28,8 +28,8 @@ class Admin(UserAdmin):
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    search_fields = ("name", )
-    list_filter = ("task_type", )
+    search_fields = ("name",)
+    list_filter = ("task_type",)
 
 
 admin.site.register(Position)

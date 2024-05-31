@@ -5,10 +5,24 @@ from task_manager.views import (
     TaskListView,
     TaskCreateView,
     TaskUpdateView,
-    TaskDeleteView, TaskTypeListView, TaskTypeCreateView, TaskTypeUpdateView, TaskTypeDeleteView, TaskDetailView,
-    WorkerListView, WorkerDetailView, WorkerCreateView, WorkerUpdateView, WorkerDeleteView, PositionListView,
-    PositionDetailView, PositionCreateView, PositionUpdateView, PositionDeleteView,
-    WorkerTaskListView, toggle_assign_to_task,
+    TaskDeleteView,
+    TaskTypeListView,
+    TaskTypeCreateView,
+    TaskTypeUpdateView,
+    TaskTypeDeleteView,
+    TaskDetailView,
+    WorkerListView,
+    WorkerDetailView,
+    WorkerCreateView,
+    WorkerUpdateView,
+    WorkerDeleteView,
+    PositionListView,
+    PositionDetailView,
+    PositionCreateView,
+    PositionUpdateView,
+    PositionDeleteView,
+    WorkerTaskListView,
+    toggle_assign_to_task,
 )
 
 urlpatterns = [
@@ -20,8 +34,16 @@ urlpatterns = [
     path("tasks/<int:pk>/", TaskDetailView.as_view(), name="task-detail"),
     path("task-types/", TaskTypeListView.as_view(), name="task-type-list"),
     path("task-types/create/", TaskTypeCreateView.as_view(), name="task-type-create"),
-    path("task-types/<int:pk>/update/", TaskTypeUpdateView.as_view(), name="task-type-update"),
-    path("task-types/<int:pk>/delete/", TaskTypeDeleteView.as_view(), name="task-type-delete"),
+    path(
+        "task-types/<int:pk>/update/",
+        TaskTypeUpdateView.as_view(),
+        name="task-type-update",
+    ),
+    path(
+        "task-types/<int:pk>/delete/",
+        TaskTypeDeleteView.as_view(),
+        name="task-type-delete",
+    ),
     path("workers/", WorkerListView.as_view(), name="worker-list"),
     path("workers/<int:pk>/", WorkerDetailView.as_view(), name="worker-detail"),
     path("workers/create/", WorkerCreateView.as_view(), name="worker-create"),
@@ -30,10 +52,22 @@ urlpatterns = [
     path("positions/", PositionListView.as_view(), name="position-list"),
     path("positions/<int:pk>/", PositionDetailView.as_view(), name="position-detail"),
     path("positions/create/", PositionCreateView.as_view(), name="position-create"),
-    path("positions/<int:pk>/update/", PositionUpdateView.as_view(), name="position-update"),
-    path("positions/<int:pk>/delete/", PositionDeleteView.as_view(), name="position-delete"),
+    path(
+        "positions/<int:pk>/update/",
+        PositionUpdateView.as_view(),
+        name="position-update",
+    ),
+    path(
+        "positions/<int:pk>/delete/",
+        PositionDeleteView.as_view(),
+        name="position-delete",
+    ),
     path("my-tasks/", WorkerTaskListView.as_view(), name="worker-task-list"),
-    path("tasks/<int:pk>/toggle-assign/", toggle_assign_to_task, name="toggle-task-assign"),
+    path(
+        "tasks/<int:pk>/toggle-assign/",
+        toggle_assign_to_task,
+        name="toggle-task-assign",
+    ),
 ]
 
 app_name = "task_manager"

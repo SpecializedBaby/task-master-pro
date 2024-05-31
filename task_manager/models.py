@@ -18,7 +18,13 @@ class Position(models.Model):
 
 
 class Worker(AbstractUser):
-    position = models.ForeignKey(Position, on_delete=models.SET_NULL, blank=True, null=True, related_name="workers")
+    position = models.ForeignKey(
+        Position,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="workers",
+    )
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
 
@@ -35,10 +41,10 @@ class Worker(AbstractUser):
 
 class Task(models.Model):
     PRIORITY_CHOICES = [
-        ('Urgent', 'Urgent'),
-        ('High', 'High'),
-        ('Medium', 'Medium'),
-        ('Low', 'Low'),
+        ("Urgent", "Urgent"),
+        ("High", "High"),
+        ("Medium", "Medium"),
+        ("Low", "Low"),
     ]
 
     name = models.CharField(max_length=255)

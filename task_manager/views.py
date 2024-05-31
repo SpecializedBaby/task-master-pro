@@ -4,7 +4,12 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from task_manager.forms import TaskForm, WorkerCreationForm, TaskSearchForm, TaskTypeSearchForm
+from task_manager.forms import (
+    TaskForm,
+    WorkerCreationForm,
+    TaskSearchForm,
+    TaskTypeSearchForm,
+)
 from task_manager.models import Worker, Task, TaskType, Position
 
 
@@ -32,9 +37,7 @@ class WorkerTaskListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(WorkerTaskListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
-        context["search_form"] = TaskSearchForm(
-            initial={"name": name}
-        )
+        context["search_form"] = TaskSearchForm(initial={"name": name})
         return context
 
     def get_queryset(self):
@@ -52,9 +55,7 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TaskListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
-        context["search_form"] = TaskSearchForm(
-            initial={"name": name}
-        )
+        context["search_form"] = TaskSearchForm(initial={"name": name})
         return context
 
     def get_queryset(self):
@@ -228,9 +229,7 @@ class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 def toggle_assign_to_task(request, pk):
     worker = Worker.objects.get(id=request.user.id)
-    if (
-        Task.objects.get(id=pk) in worker.task_set.all()
-    ):
+    if Task.objects.get(id=pk) in worker.task_set.all():
         worker.task_set.remove(pk)
     else:
         worker.task_set.add(pk)
