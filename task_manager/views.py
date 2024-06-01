@@ -154,7 +154,7 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = Worker.objects.select_related("position")
         first_name = self.request.GET.get("first_name", "")
         if first_name:
             return queryset.filter(first_name__icontains=first_name)
