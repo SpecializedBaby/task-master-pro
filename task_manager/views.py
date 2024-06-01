@@ -174,12 +174,14 @@ class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
         count_of_completed_tasks = all_tasks.filter(is_completed=True).count()
         count_of_active_tasks = all_tasks.filter(is_completed=False).count()
 
-        context.update({
-            "worker": worker,
-            'count_of_tasks': count_of_tasks,
-            'count_of_completed_tasks': count_of_completed_tasks,
-            'count_of_active_tasks': count_of_active_tasks,
-        })
+        context.update(
+            {
+                "worker": worker,
+                "count_of_tasks": count_of_tasks,
+                "count_of_completed_tasks": count_of_completed_tasks,
+                "count_of_active_tasks": count_of_active_tasks,
+            }
+        )
         return context
 
 
