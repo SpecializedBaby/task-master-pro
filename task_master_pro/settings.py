@@ -129,6 +129,8 @@ AUTH_USER_MODEL = "task_manager.Worker"
 
 LOGIN_REDIRECT_URL = "/"
 
+LOGOUT_REDIRECT_URL = "/"
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
