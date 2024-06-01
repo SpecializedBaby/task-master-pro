@@ -22,7 +22,7 @@ from task_manager.views import (
     PositionUpdateView,
     PositionDeleteView,
     WorkerTaskListView,
-    toggle_assign_to_task,
+    ToggleAssignToTaskView,
 )
 
 urlpatterns = [
@@ -65,7 +65,7 @@ urlpatterns = [
     path("my-tasks/", WorkerTaskListView.as_view(), name="worker-task-list"),
     path(
         "tasks/<int:pk>/toggle-assign/",
-        toggle_assign_to_task,
+        ToggleAssignToTaskView.as_view(),
         name="toggle-task-assign",
     ),
 ]

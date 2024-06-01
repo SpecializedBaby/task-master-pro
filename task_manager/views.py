@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -245,10 +245,15 @@ class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("task_manager:position-list")
 
 
-def toggle_assign_to_task(request, pk):
-    worker = Worker.objects.get(id=request.user.id)
-    if Task.objects.get(id=pk) in worker.task_set.all():
-        worker.task_set.remove(pk)
-    else:
-        worker.task_set.add(pk)
-    return HttpResponseRedirect(reverse_lazy("task_manager:task-detail", args=[pk]))
+class ToggleAssignToTaskView(LoginRequiredMixin, generic.View):
+    def post(self, request, *args, **kwargs):
+        pk = kwargs.get("pk")
+        worker = Worker.objects.get(id=request.user.id)
+        task = Task.objects.get(id=pk)
+
+        if task in worker.task_set.all():
+            worker.task_set.remove(pk)
+        else:
+            worker.task_set.add(pk)
+
+        return redirect("task_manager:task-detail", pk=pk)

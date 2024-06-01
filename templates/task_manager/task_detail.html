@@ -18,11 +18,18 @@
       <h2 class="mb-0">Assignees</h2>
       <div>
         {% if user in task.assignees.all %}
-          <a href="{% url 'task_manager:toggle-task-assign' pk=task.id %}" class="btn bg-gradient-warning w-auto me-2">Remove me from this task</a>
+          <form action="{% url 'task_manager:toggle-task-assign' pk=task.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn bg-gradient-warning w-auto me-2">Remove me from this task</button>
+          </form>
         {% else %}
-          <a href="{% url 'task_manager:toggle-task-assign' pk=task.id %}" class="btn bg-gradient-success w-auto me-2">Assign me to this task</a>
+          <form action="{% url 'task_manager:toggle-task-assign' pk=task.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn bg-gradient-success w-auto me-2">Assign me to this task</button>
+          </form>
         {% endif %}
       </div>
+
     </div>
 
     <hr>
