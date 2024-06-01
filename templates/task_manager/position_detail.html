@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
 
 {% block content %}
-  <div class="container mt-4">
-    <h1>{{ position.name }}</h1>
-    <h3>Workers on this position:</h3>
+  <div class="container mt-7">
+    <h1 class="mb-1">{{ position.name }}</h1>
+    <h3 class="mb-0">Workers on this position:</h3>
     {% if position.workers.all %}
       <ul class="list-group mt-3">
         {% for worker in position.workers.all %}
@@ -14,7 +14,7 @@
         {% endfor %}
       </ul>
     {% else %}
-      <div class="alert alert-warning mt-3" role="alert">
+      <div class="alert alert-primary text-white font-weight-bold" role="alert">
         There are no workers on this position!
       </div>
     {% endif %}
