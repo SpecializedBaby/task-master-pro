@@ -166,6 +166,22 @@ class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     queryset = Worker.objects.all().prefetch_related("task_set__task_type")
     template_name = "task_manager/worker_detail.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(WorkerDetailView, self).get_context_data(**kwargs)
+        worker = self.object
+        all_tasks = Task.objects.filter(assignees=worker)
+        count_of_tasks = all_tasks.count()
+        count_of_completed_tasks = all_tasks.filter(is_completed=True).count()
+        count_of_active_tasks = all_tasks.filter(is_completed=False).count()
+
+        context.update({
+            "worker": worker,
+            'count_of_tasks': count_of_tasks,
+            'count_of_completed_tasks': count_of_completed_tasks,
+            'count_of_active_tasks': count_of_active_tasks,
+        })
+        return context
+
 
 class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
     model = Worker
