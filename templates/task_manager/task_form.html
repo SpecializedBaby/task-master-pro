@@ -1,13 +1,15 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>{{ object|yesno:"Update,Create" }} task</h1>
-  <form action="" method="post" novalidate>
-    {% csrf_token %}
-    {{ form|crispy }}
+  <div class="container mt-7">
+    <h1 class="mb-0">{{ object.id|yesno:"Update,Create" }} task</h1>
+    <form action="" method="post" novalidate>
+      {% csrf_token %}
+      {{ form|crispy }}
 
-    <input type="submit" value="Submit" class="btn btn-primary">
-    <a href="{% url 'task_manager:task-list' %}" class="btn btn-secondary">Cancel</a>
-  </form>
+      <button type="submit" class="btn bg-gradient-primary w-auto me-2">Submit</button>
+      <a href="{% url 'task_manager:task-list' %}" class="btn bg-gradient-secondary w-auto me-2">Cancel</a>
+    </form>
+  </div>
 {% endblock %}
