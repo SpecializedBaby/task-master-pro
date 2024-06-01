@@ -1,17 +1,17 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <div class="container mt-4">
+  <div class="container mt-7">
     <div class="d-flex justify-content-between align-items-center">
-      <h1>Task List</h1>
-      <a href="{% url 'task_manager:task-create' %}" class="btn btn-primary">
+      <h1 class="mb-0">Task List</h1>
+      <a href="{% url 'task_manager:task-create' %}" class="btn bg-gradient-primary w-auto me-2">
         Create Task
       </a>
     </div>
     <form action="" method="get" class="form-inline">
       {{ search_form|crispy }}
-      <input class="btn btn-secondary" type="submit" value="Search">
+      <input class="btn bg-gradient-secondary w-auto me-2" type="submit" value="Search">
     </form>
     {% if task_list %}
       <div class="list-group mt-4">
@@ -19,17 +19,39 @@
           <a href="{% url 'task_manager:task-detail' pk=task.id %}" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
               <h5 class="mb-1">{{ task.name }}</h5>
-              <small>Deadline: {{ task.deadline }}</small>
+              <small class="text-uppercase font-weight-bold">Deadline: <span>{{ task.deadline }}</span></small>
             </div>
-            <p class="mb-1">Description: {{ task.description }}</p>
-            <small>Type: {{ task.task_type.name }}</small>
+            <small class="text-uppercase font-weight-bold">Description: </small>
+            <span class="mb-0">{{ task.description }}</span>
             <br>
-            <small>Assigned by: {{ task.assignees.username }}</small>
+            <small class="text-uppercase font-weight-bold">Type: </small>
+            <span class="mb-0">{{ task.task_type.name }}</span>
+            <br>
+            <small class="text-uppercase font-weight-bold">Completed: </small>
+              {% if task.is_completed %}
+                <span class="mb-0">Yes</span>
+              {% else %}
+                <span class="mb-0">No</span>
+              {% endif %}
+            <br>
+            <small class="text-uppercase font-weight-bold">Priority: </small>
+            <span class="mb-0">{{ task.priority }}</span>
+            <br>
+            <small class="text-uppercase font-weight-bold">Assigned by: </small>
+            <span>
+              {% for assignee in task.assignees.all %}
+                {% if not forloop.last %}
+                  {{ assignee.username }},
+                {% else %}
+                  {{ assignee.username }}
+                {% endif %}
+              {% endfor %}
+            </span>
           </a>
         {% endfor %}
       </div>
     {% else %}
-      <div class="alert alert-warning mt-4" role="alert">
+      <div class="alert alert-primary text-white font-weight-bold" role="alert">
         There are no tasks!
       </div>
     {% endif %}

@@ -1,17 +1,17 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <div class="container mt-4">
+  <div class="container mt-7">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h1>Position List</h1>
-      <a href="{% url 'task_manager:position-create' %}" class="btn btn-primary">
+      <h1 class="mb-0">Position List</h1>
+      <a href="{% url 'task_manager:position-create' %}" class="btn bg-gradient-primary w-auto me-2">
         Create Position
       </a>
     </div>
     <form action="" method="get" class="form-inline">
       {{ search_form|crispy }}
-      <input class="btn btn-secondary" type="submit" value="Search">
+      <input class="btn bg-gradient-secondary w-auto me-2" type="submit" value="Search">
     </form>
     {% if position_list %}
       <div class="list-group">
@@ -20,13 +20,13 @@
             <div class="d-flex w-100 justify-content-between align-items-center">
               <h5 class="mb-1">{{ position.name }}</h5>
               <div class="btn-group" role="group" aria-label="Position Actions">
-                <a href="{% url 'task_manager:position-detail' pk=position.id %}" class="btn btn-info">
+                <a href="{% url 'task_manager:position-detail' pk=position.id %}" class="btn bg-gradient-info w-auto me-2">
                   Assignees
                 </a>
-                <a href="{% url 'task_manager:position-update' pk=position.id %}" class="btn btn-secondary">
+                <a href="{% url 'task_manager:position-update' pk=position.id %}" class="btn bg-gradient-secondary w-auto me-2">
                   Update
                 </a>
-                <a href="{% url 'task_manager:position-delete' pk=position.id %}" class="btn btn-danger">
+                <a href="{% url 'task_manager:position-delete' pk=position.id %}" class="btn bg-gradient-danger w-auto me-2">
                   Delete
                 </a>
               </div>
@@ -35,7 +35,7 @@
         {% endfor %}
       </div>
     {% else %}
-      <div class="alert alert-warning mt-4" role="alert">
+      <div class="alert alert-primary text-white font-weight-bold" role="alert">
         There are no positions!
       </div>
     {% endif %}
