@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+
 import os
 from pathlib import Path
 
@@ -23,7 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-7o!&er9!gv(q7f@2pp0mgcsdsw9+3v#t^+e33l&sr1)fkxgwiu")
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-7o!&er9!gv(q7f@2pp0mgcsdsw9+3v#t^+e33l&sr1)fkxgwiu",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
@@ -103,13 +107,14 @@ DATABASES = {
     }
 }
 
-# Use PostgreSQL in production
-if os.getenv('RENDER_EXTERNAL_HOSTNAME'):
+# Use PostgreSQL in production on render.com
+# RENDER_EXTERNAL_HOSTNAME is automatically set by Render when your project is deployed!
+if os.getenv("RENDER_EXTERNAL_HOSTNAME"):
     DATABASES = {
-        'default': dj_database_url.config(
-            default='postgres://USER:PASSWORD@HOST:PORT/NAME',
+        "default": dj_database_url.config(
+            default="postgres://USER:PASSWORD@HOST:PORT/NAME",
             conn_max_age=600,
-            ssl_require=True
+            ssl_require=True,
         )
     }
 
