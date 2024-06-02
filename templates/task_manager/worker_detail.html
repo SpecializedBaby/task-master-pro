@@ -1,0 +1,115 @@
+{% extends 'layouts/base.html' %}
+{% load crispy_forms_filters %}
+
+{% block title %} Worker {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} blog-author bg-gray-100 {% endblock body_class %}
+
+{% block content %}
+
+  {% include "includes/navigation.html" %}
+
+  <section class="py-sm-7 py-5 position-relative">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 mx-auto">
+          <div class="row py-lg-7 py-5">
+            <div class="col-lg-3 col-md-5 position-relative my-auto">
+              <img class="img border-radius-lg max-width-200 w-100 position-relative z-index-2" src="{{ ASSETS_ROOT }}/img/bruce-mars.jpg">
+            </div>
+            <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mt-sm-0 mt-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h4 class="mb-0">{{ worker.first_name }} {{ worker.last_name }}</h4>
+                <div class="d-block">
+                  <a href="{% url 'task_manager:worker-update' pk=worker.id %}" type="button" class="btn btn-sm btn-outline-info text-nowrap mb-0">Edit</a>
+                  <a href="{% url 'task_manager:worker-delete' pk=worker.id %}" type="button" class="btn btn-sm btn-outline-info text-nowrap mb-0">Delete</a>
+                </div>
+              </div>
+              <div class="row mb-4">
+                <div class="col-auto">
+                  <span class="h6">{{ count_of_tasks }}</span>
+                  <span>Tasks</span>
+                </div>
+                <div class="col-auto">
+                  <span class="h6">{{ count_of_completed_tasks }}</span>
+                  <span>Completed tasks</span>
+                </div>
+                <div class="col-auto">
+                  <span class="h6">{{ count_of_active_tasks }}</span>
+                  <span>Active tasks</span>
+                </div>
+              </div>
+              <small class="text-uppercase font-weight-bold">Username: </small>
+              <span class="mb-0">{{ worker.username }}</span>
+              <br>
+              <small class="text-uppercase font-weight-bold">Email: </small>
+              <span class="mb-0">{{ worker.email }}</span>
+              <br>
+              <small class="text-uppercase font-weight-bold">Position: </small>
+              <span class="mb-0">{{ worker.position }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-3" >
+    <div class="container">
+      <h3 class="mb-5">Check my tasks</h3>
+        {% if worker.task_set.all %}
+          <div class="list-group mt-4">
+            {% for task in worker.task_set.all %}
+              <a href="{% url 'task_manager:task-detail' pk=task.id %}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{{ task.name }}</h5>
+                  <small class="text-uppercase font-weight-bold">Deadline: <span>{{ task.deadline }}</span></small>
+                </div>
+                <small class="text-uppercase font-weight-bold">Description: </small>
+                <span class="mb-0">{{ task.description }}</span>
+                <br>
+                <small class="text-uppercase font-weight-bold">Type: </small>
+                <span class="mb-0">{{ task.task_type.name }}</span>
+                <br>
+                <small class="text-uppercase font-weight-bold">Completed: </small>
+                {% if task.is_completed %}
+                  <span class="mb-0">Yes</span>
+                {% else %}
+                  <span class="mb-0">No</span>
+                {% endif %}
+                <br>
+                <small class="text-uppercase font-weight-bold">Priority: </small>
+                <span class="mb-0">{{ task.priority }}</span>
+                <br>
+                <small class="text-uppercase font-weight-bold">Assigned by: </small>
+                <span>
+                  {% for assignee in task.assignees.all %}
+                    {% if not forloop.last %}
+                      {{ assignee.username }},
+                    {% else %}
+                      {{ assignee.username }}
+                    {% endif %}
+                  {% endfor %}
+                </span>
+              </a>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="alert alert-primary text-white font-weight-bold" role="alert">
+            There are no tasks!
+          </div>
+        {% endif %}
+    </div>
+  </section>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+  <script src="{{ ASSETS_ROOT }}/js/soft-design-system.min.js?v=1.0.1" type="text/javascript"></script>
+
+{% endblock javascripts %}

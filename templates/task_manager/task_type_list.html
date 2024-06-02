@@ -1,0 +1,40 @@
+{% extends 'layouts/base-presentation.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="container mt-7">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="mb-0">Task type list</h1>
+      <a href="{% url 'task_manager:task-type-create' %}" class="btn bg-gradient-primary w-auto me-2">
+        Create task type
+      </a>
+    </div>
+    <form action="" method="get" class="form-inline">
+      {{ search_form|crispy }}
+      <input class="btn bg-gradient-secondary w-auto me-2" type="submit" value="Search">
+    </form>
+    {% if task_type_list %}
+      <div class="list-group">
+        {% for task_type in task_type_list %}
+          <div class="list-group-item">
+            <div class="d-flex w-100 justify-content-between align-items-center">
+              <h5 class="mb-1">{{ task_type.name }}</h5>
+              <div class="btn-group" role="group" aria-label="Position Actions">
+                <a href="{% url 'task_manager:task-type-update' pk=task_type.id %}" class="btn bg-gradient-secondary w-auto me-2">
+                  Update
+                </a>
+                <a href="{% url 'task_manager:task-type-delete' pk=task_type.id %}" class="btn bg-gradient-danger w-auto me-2">
+                  Delete
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-primary text-white font-weight-bold" role="alert">
+        There are no task type!
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

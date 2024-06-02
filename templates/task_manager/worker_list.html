@@ -1,0 +1,33 @@
+{% extends 'layouts/base-presentation.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="container mt-7">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1 class="mb-0">Worker List</h1>
+      <a href="{% url 'task_manager:worker-create' %}" class="btn bg-gradient-primary w-auto me-2">
+        Create Worker
+      </a>
+    </div>
+    <form action="" method="get" class="form-inline">
+      {{ search_form|crispy }}
+      <input class="btn bg-gradient-secondary w-auto me-2" type="submit" value="Search">
+    </form>
+    {% if worker_list %}
+      <div class="list-group mt-4">
+        {% for worker in worker_list %}
+          <a href="{% url 'task_manager:worker-detail' pk=worker.id %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-0">{{ worker.first_name }} {{ worker.last_name }}</h5>
+              <small class="text-uppercase font-weight-bold">Position: {{ worker.position.name }}</small>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-primary text-white font-weight-bold" role="alert">
+        There are no workers!
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

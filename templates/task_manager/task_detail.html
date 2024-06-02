@@ -1,0 +1,43 @@
+{% extends 'layouts/base-presentation.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="container mt-7">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="mb-0">{{ task.name }}</h1>
+      <div>
+        <a href="{% url 'task_manager:task-update' pk=task.id %}" class="btn bg-gradient-secondary w-auto me-2">Update</a>
+        <a href="{% url 'task_manager:task-delete' pk=task.id %}" class="btn bg-gradient-danger w-auto me-2">Delete</a>
+      </div>
+    </div>
+
+    <p><strong>Description:</strong> {{ task.description }}</p>
+    <p><strong>Type:</strong> {{ task.task_type.name }}</p>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="mb-0">Assignees</h2>
+      <div>
+        {% if user in task.assignees.all %}
+          <form action="{% url 'task_manager:toggle-task-assign' pk=task.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn bg-gradient-warning w-auto me-2">Remove me from this task</button>
+          </form>
+        {% else %}
+          <form action="{% url 'task_manager:toggle-task-assign' pk=task.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn bg-gradient-success w-auto me-2">Assign me to this task</button>
+          </form>
+        {% endif %}
+      </div>
+
+    </div>
+
+    <hr>
+
+    <ul class="list-group">
+      {% for assign in task.assignees.all %}
+        <li class="list-group-item">{{ assign.username }} ({{ assign.first_name }} {{ assign.last_name }})</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
