@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
+
+import dj_database_url
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,17 +23,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-7o!&er9!gv(q7f@2pp0mgcsdsw9+3v#t^+e33l&sr1)fkxgwiu")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
 
 INTERNAL_IPS = [
     "127.0.0.1",
     "localhost",
 ]
+# the fix for Debug toolbar
+if DEBUG:
+    import mimetypes
+
+    mimetypes.add_type("application/javascript", ".js", True)
+
+
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 # Application definition
 
@@ -95,6 +103,16 @@ DATABASES = {
     }
 }
 
+# Use PostgreSQL in production
+if os.getenv('RENDER_EXTERNAL_HOSTNAME'):
+    DATABASES = {
+        'default': dj_database_url.config(
+            default='postgres://USER:PASSWORD@HOST:PORT/NAME',
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -147,8 +165,3 @@ ASSETS_ROOT = "/static/assets"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-if DEBUG:
-    import mimetypes
-
-    mimetypes.add_type("application/javascript", ".js", True)
