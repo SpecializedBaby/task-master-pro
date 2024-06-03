@@ -2,6 +2,11 @@
 
 TaskMaster Pro is a powerful project management and collaboration tool designed to streamline your team's workflow and enhance productivity. With features like task management, worker assignments, and task types, TaskMaster Pro is an all-in-one solution for managing your projects.
 
+## Home Page
+Below is a screenshot of the home page:
+
+![Home Page Screenshot](index.png)
+
 ## Live Demo
 You can access the live demo of TaskMaster Pro here:
 [TaskMaster Pro Live Demo](https://taskmaster-pro.onrender.com/)
@@ -120,3 +125,5 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ## Contact
 For any inquiries, please contact us at specialized8393@gmail.com
+
+
