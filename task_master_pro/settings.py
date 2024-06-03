@@ -40,7 +40,7 @@ if DEBUG:
     mimetypes.add_type("application/javascript", ".js", True)
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["taskmaster-pro.onrender.com"]
 
 # Application definition
 
