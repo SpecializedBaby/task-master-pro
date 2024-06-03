@@ -2,6 +2,22 @@
 
 TaskMaster Pro is a powerful project management and collaboration tool designed to streamline your team's workflow and enhance productivity. With features like task management, worker assignments, and task types, TaskMaster Pro is an all-in-one solution for managing your projects.
 
+## Live Demo
+You can access the live demo of TaskMaster Pro here:
+[TaskMaster Pro Live Demo](https://taskmaster-pro.onrender.com/)
+
+## Test Credentials
+
+To explore the features of TaskMaster Pro, you can use the following test credentials:
+
+### Admin User
+- **Username:** admin
+- **Password:** Adminpassword123!
+
+### Regular User
+- **Username:** specialized
+- **Password:** Password123!
+
 ## Features
 - Task Management: Create, update, and delete tasks with various priority levels and deadlines.
 - Worker Management: Manage workers, assign them to tasks, and view their task statistics.
@@ -65,6 +81,17 @@ python manage.py runserver
 
 Visit http://127.0.0.1:8000/ in your web browser to access TaskMaster Pro.
 
+## Environment Variables
+
+Ensure you have a `.env` file in your project root with the following variables:
+
+```env
+DJANGO_SECRET_KEY=your_secret_key
+DJANGO_DEBUG=True
+DATABASE_URL=your_database_url
+PYTHON_VERSION=3.11.2
+WEB_CONCURRENCY=4
+```
 
 ## Usage
 ### Navigation
@@ -90,3 +117,6 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Acknowledgments
 - [Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/) for the responsive design framework.
 - [Django](https://www.djangoproject.com/) for the robust web framework.
+
+## Contact
+For any inquiries, please contact us at specialized8393@gmail.com
