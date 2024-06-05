@@ -17,7 +17,7 @@ To explore the features of TaskMaster Pro, you can use the following test creden
 
 ### Admin User
 [TaskMaster Pro Admin Panel](https://taskmaster-pro.onrender.com/admin)
-- **Username:** admin
+- **Username:** admin.user
 - **Password:** Adminpassword123!
 
 ### Regular User
